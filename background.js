@@ -63,11 +63,11 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
         t.textContent = 'BlackBar — ' + lvl + ' redact copied (' + n + ' items)';
         Object.assign(t.style, {
           position: 'fixed', bottom: '20px', right: '20px',
-          background: '#141414', color: '#f0ece2',
+          background: '#000000', color: '#ffffff',
           padding: '10px 14px', font: '12px ui-monospace, Menlo, monospace',
           letterSpacing: '0.04em', zIndex: 2147483647,
-          borderLeft: '4px solid #c8201a',
-          boxShadow: '0 8px 24px rgba(0,0,0,0.25)',
+          border: '1px solid #ffffff',
+          boxShadow: '0 8px 24px rgba(0,0,0,0.5)',
         });
         document.body.appendChild(t);
         setTimeout(() => t.remove(), 2200);

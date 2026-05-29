@@ -26,7 +26,7 @@ A Chrome extension that anonymizes sensitive data (PII, secrets, identifiers) at
 
 ## What it detects
 
-Credit cards, US-style SSNs, emails, phone numbers, IPv4 addresses, common API key shapes (Stripe, GitHub, AWS, Google, generic bearer tokens, hex secrets), URLs (medium+), dates (medium+), street addresses (hard), proper names (hard, heuristic), long numeric IDs (hard).
+Credit cards, US-style SSNs, emails, phone numbers (US + common international shapes, with or without separators), IPv4 addresses, geographic coordinates (decimal degree pairs or DMS), common API key shapes (Stripe, GitHub, AWS, Google, generic bearer tokens, hex secrets), URLs (medium+), dates (medium+), hotel/resort property names (medium+, chain names + suffix heuristic), street addresses (hard), proper names (hard, heuristic), long numeric IDs (hard).
 
 Patterns live in `redactor.js` — add or tune them there. Each pattern is a `{ name, regex, minLevel, soft, medium, hard }` object.
 
