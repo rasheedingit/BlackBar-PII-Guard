@@ -8,20 +8,31 @@
   const output = $('output');
   const status = $('status');
   const levelButtons = document.querySelectorAll('.lvl');
+  const showPickerEl = $('show-picker');
 
   let currentLevel = 'medium';
   let debounceT;
 
   // Restore preferences and last input.
   if (chrome && chrome.storage && chrome.storage.local) {
-    chrome.storage.local.get(['level', 'lastInput'], (data) => {
+    chrome.storage.local.get(['level', 'lastInput', 'showPicker'], (data) => {
       if (data.level) setLevel(data.level, /*persist*/ false);
       if (data.lastInput) {
         input.value = data.lastInput;
         doRedact();
       }
+      if (typeof data.showPicker === 'boolean') {
+        showPickerEl.checked = data.showPicker;
+      }
     });
   }
+
+  showPickerEl.addEventListener('change', () => {
+    if (chrome.storage && chrome.storage.local) {
+      chrome.storage.local.set({ showPicker: showPickerEl.checked });
+    }
+    flash(showPickerEl.checked ? 'picker on' : 'auto-redact on');
+  });
 
   function setLevel(level, persist = true) {
     if (!['soft', 'medium', 'hard'].includes(level)) return;

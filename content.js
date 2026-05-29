@@ -14,11 +14,28 @@
 
   const LEVELS = ['soft', 'medium', 'hard'];
   let preferredLevel = 'medium';
+  let showPicker = true;
 
   if (chrome.storage && chrome.storage.local) {
-    chrome.storage.local.get(['level'], (data) => {
+    chrome.storage.local.get(['level', 'showPicker'], (data) => {
       if (data.level && LEVELS.includes(data.level)) preferredLevel = data.level;
+      if (typeof data.showPicker === 'boolean') showPicker = data.showPicker;
+      log('settings loaded', { preferredLevel, showPicker });
     });
+    // Keep in sync if the user toggles the option in the popup while
+    // the page is still open.
+    if (chrome.storage.onChanged) {
+      chrome.storage.onChanged.addListener((changes, area) => {
+        if (area !== 'local') return;
+        if (changes.level && LEVELS.includes(changes.level.newValue)) {
+          preferredLevel = changes.level.newValue;
+        }
+        if (changes.showPicker && typeof changes.showPicker.newValue === 'boolean') {
+          showPicker = changes.showPicker.newValue;
+        }
+        log('settings updated', { preferredLevel, showPicker });
+      });
+    }
   }
 
   function isEditable(el) {
@@ -77,7 +94,7 @@
     activePicker = null;
   }
 
-  function showPicker(target, originalText) {
+  function showPickerUI(target, originalText) {
     closePicker();
 
     const counts = {
@@ -224,7 +241,16 @@
     e.preventDefault();
     e.stopImmediatePropagation();
     e.stopPropagation();
-    showPicker(target, text);
+
+    if (!showPicker) {
+      // Auto-redact at the popup-selected level — no UI.
+      const out = self.BlackBarRedactor.redact(text, preferredLevel).text;
+      insertIntoTarget(target, out);
+      log('auto-redacted at', preferredLevel);
+      return;
+    }
+
+    showPickerUI(target, text);
   }
 
   // Capture phase on both window and document so we beat editors (Lexical,
