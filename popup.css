@@ -126,6 +126,50 @@ body {
   letter-spacing: 0.14em;
 }
 
+/* ---------- Options / toggle ---------- */
+.opts {
+  margin-bottom: 12px;
+}
+
+.toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+  padding: 6px 0;
+}
+.toggle input { position: absolute; opacity: 0; pointer-events: none; }
+
+.toggle-track {
+  position: relative;
+  width: 32px; height: 18px;
+  background: var(--paper-2);
+  border: 1px solid var(--ink);
+  flex-shrink: 0;
+  transition: background .15s ease;
+}
+.toggle-thumb {
+  position: absolute;
+  top: 1px; left: 1px;
+  width: 14px; height: 14px;
+  background: var(--ink);
+  transition: transform .15s ease, background .15s ease;
+}
+.toggle input:checked + .toggle-track { background: var(--ink); }
+.toggle input:checked + .toggle-track .toggle-thumb {
+  transform: translateX(14px);
+  background: var(--paper);
+}
+.toggle input:focus-visible + .toggle-track {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+.toggle-label { display: flex; flex-direction: column; line-height: 1.25; }
+.toggle-title { font-size: 12px; color: var(--ink); }
+.toggle-hint  { font-size: 9px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.12em; margin-top: 2px; }
+
 /* ---------- IO ---------- */
 .io { display: block; margin-bottom: 10px; }
 
