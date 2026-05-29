@@ -1,0 +1,24 @@
+{
+  "manifest_version": 3,
+  "name": "BlackBar — Sensitive Data Redactor",
+  "version": "0.1.0",
+  "description": "Anonymize PII, secrets, and sensitive data at three levels: soft, medium, or hard. Runs locally — nothing leaves your browser.",
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    },
+    "default_title": "BlackBar — redact sensitive data"
+  },
+  "permissions": ["contextMenus", "scripting", "activeTab", "storage"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}

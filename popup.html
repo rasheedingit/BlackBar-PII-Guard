@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>BlackBar</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <main class="app">
+    <header class="hd">
+      <div class="brand">
+        <span class="bar" aria-hidden="true"></span>
+        <h1>BlackBar</h1>
+      </div>
+      <p class="tag">redact before you regret</p>
+    </header>
+
+    <section class="levels" role="radiogroup" aria-label="Redaction level">
+      <button class="lvl" data-level="soft" role="radio" aria-checked="false">
+        <span class="lvl-name">Soft</span>
+        <span class="lvl-bars" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="lvl-desc">partial mask</span>
+      </button>
+      <button class="lvl is-active" data-level="medium" role="radio" aria-checked="true">
+        <span class="lvl-name">Medium</span>
+        <span class="lvl-bars" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="lvl-desc">tag labels</span>
+      </button>
+      <button class="lvl" data-level="hard" role="radio" aria-checked="false">
+        <span class="lvl-name">Hard</span>
+        <span class="lvl-bars" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="lvl-desc">obliterate</span>
+      </button>
+    </section>
+
+    <label class="io">
+      <span class="io-label">Input</span>
+      <textarea id="input" placeholder="Paste anything containing emails, phones, cards, keys…" spellcheck="false"></textarea>
+    </label>
+
+    <div class="actions">
+      <button id="redact-btn" class="btn primary" title="Redact (⌘/Ctrl + Enter)">Redact</button>
+      <button id="paste-btn" class="btn ghost" title="Paste from clipboard">Paste</button>
+      <button id="clear-btn" class="btn ghost" title="Clear">Clear</button>
+    </div>
+
+    <label class="io">
+      <span class="io-label">Output</span>
+      <textarea id="output" readonly placeholder="Redacted output appears here." spellcheck="false"></textarea>
+    </label>
+
+    <div class="actions">
+      <button id="copy-btn" class="btn">Copy redacted</button>
+      <span id="status" class="status" role="status" aria-live="polite"></span>
+    </div>
+
+    <footer class="ft">
+      <span>Tip — right-click selected text on any page → Redact</span>
+    </footer>
+  </main>
+  <script src="redactor.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

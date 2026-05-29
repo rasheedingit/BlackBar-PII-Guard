@@ -1,0 +1,226 @@
+/* BlackBar popup — paper & ink aesthetic, redaction-bar motif. */
+
+:root {
+  --paper: #f0ece2;
+  --paper-2: #e8e3d5;
+  --paper-3: #ffffff;
+  --ink: #141414;
+  --ink-2: #2a2a2a;
+  --muted: #807660;
+  --signal: #c8201a;
+  --rule: #c4bca6;
+  --bar: #0a0a0a;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+
+body {
+  width: 380px;
+  font-family: ui-monospace, "SF Mono", "Menlo", "Cascadia Code", "Consolas", monospace;
+  background:
+    radial-gradient(1200px 200px at 0% 0%, rgba(0,0,0,0.04), transparent 60%),
+    var(--paper);
+  color: var(--ink);
+  font-size: 13px;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+}
+
+.app { padding: 16px 16px 14px; }
+
+/* ---------- Header ---------- */
+.hd { margin-bottom: 14px; }
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand .bar {
+  display: block;
+  width: 30px;
+  height: 14px;
+  background: var(--bar);
+  transform: skewX(-8deg);
+}
+
+.brand h1 {
+  font-family: "Iowan Old Style", "Palatino Linotype", Palatino, "Hoefler Text", Georgia, serif;
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: -0.015em;
+  line-height: 1;
+}
+
+.tag {
+  margin: 8px 0 0 0;
+  color: var(--muted);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+}
+
+/* ---------- Level selector ---------- */
+.levels {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0;
+  border: 1px solid var(--ink);
+  background: var(--paper-2);
+  margin-bottom: 14px;
+}
+
+.lvl {
+  background: transparent;
+  border: 0;
+  border-right: 1px solid var(--ink);
+  cursor: pointer;
+  padding: 10px 10px 9px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font: inherit;
+  color: var(--ink);
+  transition: background .12s ease, color .12s ease;
+}
+.lvl:last-child { border-right: 0; }
+.lvl:hover { background: var(--paper); }
+.lvl.is-active {
+  background: var(--ink);
+  color: var(--paper);
+}
+.lvl.is-active:hover { background: var(--ink-2); }
+
+.lvl-name {
+  font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+
+.lvl-bars {
+  display: flex;
+  gap: 2px;
+  height: 4px;
+  align-items: center;
+}
+.lvl-bars i {
+  display: block;
+  height: 100%;
+  flex: 1;
+  background: currentColor;
+  opacity: .15;
+}
+.lvl[data-level="soft"]   .lvl-bars i:nth-child(1) { opacity: 1; }
+.lvl[data-level="medium"] .lvl-bars i:nth-child(1),
+.lvl[data-level="medium"] .lvl-bars i:nth-child(2) { opacity: 1; }
+.lvl[data-level="hard"]   .lvl-bars i { opacity: 1; }
+
+.lvl-desc {
+  font-size: 9px;
+  opacity: .65;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+}
+
+/* ---------- IO ---------- */
+.io { display: block; margin-bottom: 10px; }
+
+.io-label {
+  display: block;
+  font-size: 9px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  margin-bottom: 5px;
+}
+
+textarea {
+  width: 100%;
+  min-height: 88px;
+  resize: vertical;
+  background: var(--paper-3);
+  color: var(--ink);
+  border: 1px solid var(--ink);
+  padding: 9px 11px;
+  font: inherit;
+  line-height: 1.5;
+  outline: none;
+  border-radius: 0;
+}
+textarea:focus {
+  box-shadow: inset 0 0 0 1px var(--ink);
+  border-color: var(--ink);
+}
+#output {
+  background: var(--paper-2);
+  min-height: 100px;
+}
+
+/* ---------- Buttons ---------- */
+.actions {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.btn {
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+  border: 1px solid var(--ink);
+  background: var(--paper-2);
+  color: var(--ink);
+  padding: 7px 14px;
+  letter-spacing: 0.02em;
+  border-radius: 0;
+  transition: transform .06s ease, background .12s ease, color .12s ease, border-color .12s ease;
+}
+.btn:hover { background: var(--paper); }
+.btn:active { transform: translateY(1px); }
+.btn:focus-visible {
+  outline: 2px solid var(--signal);
+  outline-offset: 2px;
+}
+
+.btn.primary {
+  background: var(--ink);
+  color: var(--paper);
+}
+.btn.primary:hover {
+  background: var(--signal);
+  border-color: var(--signal);
+  color: var(--paper);
+}
+
+.btn.ghost {
+  background: transparent;
+  border-style: dashed;
+  color: var(--ink-2);
+}
+
+.status {
+  margin-left: auto;
+  color: var(--muted);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  min-height: 14px;
+}
+
+/* ---------- Footer ---------- */
+.ft {
+  margin-top: 2px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--rule);
+  color: var(--muted);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+}
